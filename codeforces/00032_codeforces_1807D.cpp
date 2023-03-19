@@ -1,4 +1,3 @@
-// Time limit exceeded
 #include<iostream>
 
 using namespace std;
@@ -9,7 +8,7 @@ int main()
 
     cin >> testcases;
 
-    for (int i = 0; i < testcases; i++)
+    while(testcases--)
     {
         int array_length, number_of_queries;
 
@@ -18,40 +17,47 @@ int main()
 
         int array[array_length];
 
-        int sum_of_array = 0;
+        int cumulative_sum[array_length];
 
         for (int j = 0; j < array_length; j++)
         {
             cin >> array[j];
-
-            sum_of_array += array[j];
         }
 
+        cumulative_sum[0] = array[0];
+
+        for (int j = 1; j < array_length; j++)
+        {
+            cumulative_sum[j] = cumulative_sum[j-1] + array[j];
+        }
+        
         int l, r, k;
 
-        for (int a = 0; a < number_of_queries; a++)
+        while(number_of_queries--)
         {
             cin >> l;
             cin >> r;
             cin >> k;
 
-            int new_sum_of_array = 0;
-
-            l--;
-            r--;
-
             int y = r - l + 1;
 
             int c = y * k;
 
-            int deleteable = 0;
+            int first;
 
-            for (int t = l; t <= r; t++)
+            if (l == 1)
             {
-                deleteable += array[t];
+                first = 0;
+            }
+            else
+            {
+                first = cumulative_sum[l-2];
             }
             
-            new_sum_of_array = sum_of_array - deleteable + c;
+
+            int last = cumulative_sum[array_length-1] - cumulative_sum[r-1];
+
+            int new_sum_of_array = first + c + last;
 
             if (new_sum_of_array % 2 != 0)
             {
