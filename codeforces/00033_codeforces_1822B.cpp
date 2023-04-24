@@ -30,7 +30,7 @@ int main()
         }
         else
         {
-            sort(array, array + n);
+            sort(array, array + n); // from algorithm library
 
             long long int answer_1 = array[n-2] * array[n-1]; 
             long long int answer_2 = array[0] * array[1];
